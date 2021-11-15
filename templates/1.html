@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<form method="POST" action="/" id = "search">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Отправить данные" id = "b">
+    <h1>Результат поиска:<span id = "res"></span></h1>
+</form>
+<script>
+      $(document).ready(function () {
+      $('#search').submit(function () {
+              $.ajax({
+                  data: $(this).serialize(),
+                  url: " ",
+                  datatype: 'json',
+                  type: 'POST', // GET или POST
+                  success: function (response) {
+                        $("#res").text(response.result);
+                  },
+                  error: function (response) {
+                      alert(response.responseJSON.errors);
+                      console.log(response.responseJSON.errors)
+                  }
+              });
+              return false;
+          });
+      })
+  </script>
+</body>
+</html>
+
+
+
+
